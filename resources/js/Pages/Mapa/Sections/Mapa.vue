@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 import "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -106,7 +107,7 @@ function zoomInOut(direction) {
 </script>
 
 <template>
-    <div id="map" class="z-[5] h-[calc(100vh)] max-h-[calc(100vh)]">
+    <div id="map" class="map-container">
         <!-- Botões de Zoom In e Zoom Out -->
         <div class="zoom-controls">
             <button @click="zoomInOut('in')" class="zoom-in-btn">
@@ -135,6 +136,12 @@ function zoomInOut(direction) {
                     />
                 </svg>
             </button>
+        </div>
+        <!-- Botões de navegação -->
+        <div class="navigation-controls">
+            <Link :href="route('grafico')" to="/grafico" class="nav-btn">
+                Ir para Gráficos
+            </Link>
         </div>
     </div>
 </template>
