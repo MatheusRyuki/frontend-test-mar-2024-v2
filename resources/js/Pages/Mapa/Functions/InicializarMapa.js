@@ -134,6 +134,8 @@ function CriaMenuContexto(map, configuracoesLeaflet) {
             coordenada.x.toFixed(5) +
             "<br>";
         popup.setLatLng(e.latlng).setContent(content).openOn(map);
+         // Adiciona uma classe customizada ao popup para estilização
+        popup.getElement().classList.add("custom-popup");
     });
     logMessages &&
         console.log("   [CreateMap] Menu de contexto adicionado ao mapa.");
