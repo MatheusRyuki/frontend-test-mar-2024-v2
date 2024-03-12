@@ -2,6 +2,12 @@ import { ZoomInOut } from "./Zoom/ZoomInOut.js";
 
 let logMessages = false;
 
+/**
+ * Gera configurações iniciais para o mapa Leaflet baseado nas configurações fornecidas.
+ *
+ * @param {Object} configs - Objeto contendo configurações específicas do mapa, incluindo controle de zoom e limites.
+ * @returns {Object} Configurações do mapa Leaflet.
+ */
 function ConfigsLeaflet(configs) {
     return {
         zoomControl: configs.configuracoesLeaflet.zoomControl,
@@ -12,6 +18,12 @@ function ConfigsLeaflet(configs) {
     };
 }
 
+/**
+ * Adiciona um controle no mapa para exibir as coordenadas da posição do mouse.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ * @param {Object} configuracoesLeaflet - Objeto contendo configurações do sistema de coordenadas e texto de projeção.
+ */
 function AdicionaCoordenadasMouse(map, configuracoesLeaflet) {
     let crs = configuracoesLeaflet.crs;
     let sistema = configuracoesLeaflet.sistema;
@@ -35,6 +47,13 @@ function AdicionaCoordenadasMouse(map, configuracoesLeaflet) {
         console.log("   [CreateMap] Coordenadas do mouse adicionada ao mapa.");
 }
 
+/**
+ * Adiciona uma barra de escala no mapa Leaflet.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ * @param {number} [largura=150] - Largura máxima da barra de escala em pixels.
+ * @param {string} [posicao="bottomleft"] - Posição da barra de escala no mapa.
+ */
 function AdicionaEscala(map, largura = 150, posicao = "bottomleft") {
     let escala = L.control
         .scale({
@@ -47,6 +66,14 @@ function AdicionaEscala(map, largura = 150, posicao = "bottomleft") {
     logMessages && console.log("   [CreateMap] Escala adicionada ao mapa.");
 }
 
+/**
+ * Define e adiciona uma função no objeto `window` para resetar a visão inicial do mapa.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ * @param {number} x - Longitude inicial do centro do mapa.
+ * @param {number} y - Latitude inicial do centro do mapa.
+ * @param {number} z - Nível de zoom inicial do mapa.
+ */
 function FuncaoVisaoInicial(map, x, y, z) {
     window.SetaVisaoInicial = function () {
         return map.setView([y, x], z);
@@ -57,16 +84,33 @@ function FuncaoVisaoInicial(map, x, y, z) {
         );
 }
 
+/**
+ * Adiciona funcionalidades de zoom in e zoom out no mapa, utilizando uma função importada.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ */
 function FuncoesZoom(map) {
     ZoomInOut(map, window, logMessages);
 }
 
+/**
+ * Define um texto de atribuição personalizado no canto inferior do mapa.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ * @param {string} textoAttribution - Texto de atribuição a ser exibido no mapa.
+ */
 function AdicionaAttribution(map, textoAttribution) {
     map.attributionControl.setPrefix(textoAttribution);
     logMessages &&
         console.log("   [CreateMap] Attribution adicionado ao mapa.");
 }
 
+/**
+ * Cria um menu de contexto que é exibido ao clicar com o botão direito do mouse no mapa, mostrando as coordenadas do ponto clicado.
+ *
+ * @param {L.Map} map - A instância do mapa Leaflet.
+ * @param {Object} configuracoesLeaflet - Objeto contendo configurações do sistema de coordenadas e texto de projeção.
+ */
 function CriaMenuContexto(map, configuracoesLeaflet) {
     let crs = configuracoesLeaflet.crs;
     let sistema = configuracoesLeaflet.sistema;
@@ -95,6 +139,14 @@ function CriaMenuContexto(map, configuracoesLeaflet) {
         console.log("   [CreateMap] Menu de contexto adicionado ao mapa.");
 }
 
+/**
+ * Adiciona uma funcionalidade no objeto `window` para mostrar informações do mapa e permitir ao usuário inserir coordenadas.
+ *
+ * Ao ser chamada, esta função exibe um prompt para o usuário digitar coordenadas, adiciona um marcador nessas coordenadas e ajusta a visão do mapa.
+ *
+ * @param {L.Map} mapa - A instância do mapa Leaflet.
+ * @returns {Object} Objeto contendo informações sobre o zoom, o centro e os limites do mapa.
+ */
 function FuncaoMapaInformacoes(mapa) {
     window.MapaInformacoes = function () {
         let zoom = mapa.getZoom();
