@@ -8,63 +8,45 @@ const props = defineProps({
 });
 
 const chartRef = ref(null);
-const chartConfig = reactive({
-    type: "bar",
-    data: {},
-    options: {},
-});
-
-// Estado para controlar a visibilidade dos datasets
-const datasetsVisibility = reactive({
-    temperatura: true,
-    precipitacao: true,
-});
+let chartInstance = null;
 
 onMounted(() => {
-    chartConfig.data = {
-        labels: props.dados.labels,
-        datasets: props.dados.datasets,
-    };
     const ctx = chartRef.value.getContext("2d");
-    new Chart(ctx, chartConfig);
+    console.log(props.dados);
+    chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: props.dados.labels,
+            datasets: props.dados.datasets,
+        },
+        options: {},
+    });
 });
 
-// Observa mudanças na visibilidade dos datasets para atualizar o gráfico
-watch(
-    datasetsVisibility,
-    (newVal) => {
-        chartConfig.data.datasets.forEach((dataset) => {
-            if (dataset.label.includes("Temperatura")) {
-                dataset.hidden = !newVal.temperatura;
-            } else if (dataset.label.includes("Precipitação")) {
-                dataset.hidden = !newVal.precipitacao;
-            }
-        });
-        // Redesenha o gráfico aqui se necessário
-    },
-    { deep: true }
-);
+function toggleVisibility(datasetLabel) {
+    if (chartInstance) {
+        const dataset = chartInstance.data.datasets.find(
+            (d) => d.label === datasetLabel
+        );
+        if (dataset) {
+            // Toggle da visibilidade
+            dataset.hidden = !dataset.hidden;
+            chartInstance.update();
+        }
+    }
+}
 </script>
 
 <template>
     <div>
         <canvas ref="chartRef" class="chart-container"></canvas>
         <div class="button-container">
-            <button
-                class="toggle-btn"
-                @click="
-                    datasetsVisibility.temperatura =
-                        !datasetsVisibility.temperatura
-                "
-            >
+            <button class="toggle-btn" @click="toggleVisibility('Temperatura Média')">
                 Temperatura
             </button>
             <button
                 class="toggle-btn"
-                @click="
-                    datasetsVisibility.precipitacao =
-                        !datasetsVisibility.precipitacao
-                "
+                @click="toggleVisibility('Precipitação acumulada (mm)')"
             >
                 Precipitação
             </button>
