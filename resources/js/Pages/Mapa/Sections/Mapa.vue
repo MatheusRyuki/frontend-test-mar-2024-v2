@@ -138,27 +138,3 @@ function zoomInOut(direction) {
         </div>
     </div>
 </template>
-
-<style scoped>
-.zoom-controls {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 1000;
-}
-
-.zoom-controls button {
-    display: block;
-    background-color: white;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 5px;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.zoom-controls button img {
-    width: 24px;
-    height: 24px;
-}
-</style>
