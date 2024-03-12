@@ -119,22 +119,38 @@ function CriaMenuContexto(map, configuracoesLeaflet) {
     let popup = L.popup();
     map.on("contextmenu", (e) => {
         let coordenada = projCRS.project(L.latLng(e.latlng.lat, e.latlng.lng));
+        let content = "";
+
+        // Formatando a data e hora atual
+        let agora = new Date();
+        let dataFormatada =
+            agora.toLocaleDateString("pt-BR") +
+            " " +
+            agora.toLocaleTimeString("pt-BR");
+
+        // Adicionando ícone de calendário
+        let iconeCalendario =
+            '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="17.5" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"/></svg>';
+
         if (sistema == "utm") {
-            let content =
-                "<b>N</b>: " +
+            content =
+                iconeCalendario +
+                dataFormatada +
+                "<br><b>N</b>: " +
                 coordenada.y.toFixed(0) +
-                "<br><b>E</b>: " +
-                coordenada.x.toFixed(0) +
-                "<br>";
+                " <br><b>E</b>: " +
+                coordenada.x.toFixed(0);
+        } else {
+            content =
+                iconeCalendario +
+                dataFormatada +
+                "<br><b>Lat.</b>: " +
+                coordenada.y.toFixed(5) +
+                " <br><b>Lon.</b>: " +
+                coordenada.x.toFixed(5);
         }
-        let content =
-            "<b>Lat.</b>: " +
-            coordenada.y.toFixed(5) +
-            " <br><b>Lon.</b>: " +
-            coordenada.x.toFixed(5) +
-            "<br>";
         popup.setLatLng(e.latlng).setContent(content).openOn(map);
-         // Adiciona uma classe customizada ao popup para estilização
+        // Adiciona uma classe customizada ao popup para estilização
         popup.getElement().classList.add("custom-popup");
     });
     logMessages &&
