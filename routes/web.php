@@ -125,7 +125,7 @@ Route::get('/mapa', function () {
             ]
         ],
     ]);
-});
+})->name('mapa');;
 
 Route::get('/grafico', function () {
     return Inertia::render('Grafico/Index', [
@@ -149,4 +149,4 @@ Route::get('/grafico', function () {
             ]
         ]
     ]);
-});
+})->name('grafico');;
