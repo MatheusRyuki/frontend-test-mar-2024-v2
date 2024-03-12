@@ -25,18 +25,20 @@ defineProps({
             <div class="mt-16">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     <!-- Cartão para a rota "/mapa" -->
-                    <Link :href="route('mapa')" class="card-style">
+                    <Link :href="route('mapa')" class="card">
                         <div class="card-content">
-                            <h2>Mapa</h2>
-                            <p>Visualize o mapa com nossos dados.</p>
+                            <h2 class="card-title">Mapa</h2>
+                            <p class="card-text">
+                                Visualize o mapa com nossos dados.
+                            </p>
                         </div>
                     </Link>
 
                     <!-- Cartão para a rota "/grafico" -->
-                    <Link :href="route('grafico')" class="card-style">
+                    <Link :href="route('grafico')" class="card">
                         <div class="card-content">
-                            <h2>Gráfico</h2>
-                            <p>
+                            <h2 class="card-title">Gráfico</h2>
+                            <p class="card-text">
                                 Veja os gráficos elaborados a partir dos nossos
                                 dados.
                             </p>
@@ -49,5 +51,9 @@ defineProps({
 </template>
 
 <style>
-
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
 </style>
