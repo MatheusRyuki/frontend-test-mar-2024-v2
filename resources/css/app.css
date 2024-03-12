@@ -77,3 +77,39 @@ a:hover {
     line-height: 1.6;
     font-size: 14px;
 }
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 40vh;
+    width: 80vw;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-top: 5vh;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.toggle-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover,
+.toggle-btn:focus {
+    background-color: #0056b3;
+    color: #000;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+}

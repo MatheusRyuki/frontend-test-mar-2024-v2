@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 
@@ -8,51 +8,66 @@ const props = defineProps({
 });
 
 const chartRef = ref(null);
+const chartConfig = reactive({
+    type: "bar",
+    data: {},
+    options: {},
+});
+
+// Estado para controlar a visibilidade dos datasets
+const datasetsVisibility = reactive({
+    temperatura: true,
+    precipitacao: true,
+});
 
 onMounted(() => {
+    chartConfig.data = {
+        labels: props.dados.labels,
+        datasets: props.dados.datasets,
+    };
     const ctx = chartRef.value.getContext("2d");
-    const chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: props.dados.labels,
-            datasets: [
-                {
-                    label: "Temperatura",
-                    data: props.dados.datasets[0].data,
-                    borderColor: "rgb(255, 99, 132)",
-                    backgroundColor: "rgba(255, 99, 132, 0.2)",
-                    yAxisID: "y",
-                },
-                {
-                    label: "Precipitação",
-                    data: props.dados.datasets[1].data,
-                    borderColor: "rgb(54, 162, 235)",
-                    backgroundColor: "rgba(54, 162, 235, 0.2)",
-                    yAxisID: "y1",
-                },
-            ],
-        },
-        options: {
-            scales: {
-                y: {
-                    type: "linear",
-                    display: true,
-                    position: "left",
-                },
-                y1: {
-                    type: "linear",
-                    display: true,
-                    position: "right",
-                    grid: {
-                        drawOnChartArea: false,
-                    },
-                },
-            },
-        },
-    });
+    new Chart(ctx, chartConfig);
 });
+
+// Observa mudanças na visibilidade dos datasets para atualizar o gráfico
+watch(
+    datasetsVisibility,
+    (newVal) => {
+        chartConfig.data.datasets.forEach((dataset) => {
+            if (dataset.label.includes("Temperatura")) {
+                dataset.hidden = !newVal.temperatura;
+            } else if (dataset.label.includes("Precipitação")) {
+                dataset.hidden = !newVal.precipitacao;
+            }
+        });
+        // Redesenha o gráfico aqui se necessário
+    },
+    { deep: true }
+);
 </script>
 
 <template>
-    <canvas ref="chartRef">{{ dados }}</canvas>
+    <div>
+        <canvas ref="chartRef" class="chart-container"></canvas>
+        <div class="button-container">
+            <button
+                class="toggle-btn"
+                @click="
+                    datasetsVisibility.temperatura =
+                        !datasetsVisibility.temperatura
+                "
+            >
+                Temperatura
+            </button>
+            <button
+                class="toggle-btn"
+                @click="
+                    datasetsVisibility.precipitacao =
+                        !datasetsVisibility.precipitacao
+                "
+            >
+                Precipitação
+            </button>
+        </div>
+    </div>
 </template>
