@@ -5,7 +5,7 @@ defineProps({
     projeto: {
         type: Object,
         required: true
-    }, 
+    },
     rasters: {
         type: Object,
         required: true

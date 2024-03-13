@@ -34,9 +34,9 @@ let configsMapa = props.projeto.mapa.configuracao;
 
 let rasters = props.projeto.rasters;
 
-const rasterAtual = ref("Google Satélite");
-
 let map = ref(null);
+let currentLayer;
+const currentRaster = ref("OpenStreetMap");
 
 onMounted(() => {
     // Objeto com as configurações do Leaflet para criação do objeto map
@@ -107,13 +107,30 @@ function zoomInOut(direction) {
     ZoomInOut(map, direction);
 }
 
-function alternarMapaDeFundo() {
-    if (rasterAtual.value === "Google Satélite") {
-        ToggleRasterTile("OpenStreetMap");
-        rasterAtual.value = "OpenStreetMap";
+function toggleMapRaster() {
+    if (currentLayer) {
+        map.removeLayer(currentLayer); // Remove o layer atual do mapa
+    }
+
+    if (currentRaster.value === "OpenStreetMap") {
+        currentLayer = L.tileLayer(
+            "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                maxZoom: 20,
+                attribution: "OpenStreetMap Contributors",
+            }
+        ).addTo(map);
+        currentRaster.value = "Google Satélite";
     } else {
-        ToggleRasterTile("Google Satélite");
-        rasterAtual.value = "Google Satélite";
+        currentLayer = L.tileLayer(
+            "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+            {
+                maxZoom: 20,
+                subdomains: ["mt0", "mt1", "mt2", "mt3"],
+                attribution: "Google",
+            }
+        ).addTo(map);
+        currentRaster.value = "OpenStreetMap";
     }
 }
 </script>
@@ -165,7 +182,7 @@ function alternarMapaDeFundo() {
                 </svg>
                 Ir para Gráficos
             </Link>
-            <button @click="alternarMapaDeFundo" class="btn-alternar-mapa">
+            <button @click="toggleMapRaster" class="btn-alternar-mapa">
                 Alternar Mapa de Fundo
             </button>
         </div>
