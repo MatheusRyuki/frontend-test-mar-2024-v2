@@ -207,3 +207,17 @@ a:hover {
     background-color: #0056b3; /* Cor de hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada no hover */
 }
+
+.btn-alternar-mapa {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-alternar-mapa:hover {
+    background-color: #0056b3;
+}

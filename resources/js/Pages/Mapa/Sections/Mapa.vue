@@ -34,6 +34,8 @@ let configsMapa = props.projeto.mapa.configuracao;
 
 let rasters = props.projeto.rasters;
 
+const rasterAtual = ref("Google Satélite");
+
 let map = ref(null);
 
 onMounted(() => {
@@ -104,6 +106,16 @@ onMounted(() => {
 function zoomInOut(direction) {
     ZoomInOut(map, direction);
 }
+
+function alternarMapaDeFundo() {
+    if (rasterAtual.value === "Google Satélite") {
+        ToggleRasterTile("OpenStreetMap");
+        rasterAtual.value = "OpenStreetMap";
+    } else {
+        ToggleRasterTile("Google Satélite");
+        rasterAtual.value = "Google Satélite";
+    }
+}
 </script>
 
 <template>
@@ -153,6 +165,9 @@ function zoomInOut(direction) {
                 </svg>
                 Ir para Gráficos
             </Link>
+            <button @click="alternarMapaDeFundo" class="btn-alternar-mapa">
+                Alternar Mapa de Fundo
+            </button>
         </div>
     </div>
 </template>
