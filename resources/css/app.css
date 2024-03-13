@@ -209,15 +209,22 @@ a:hover {
 }
 
 .btn-alternar-mapa {
-    padding: 10px 15px;
+    padding: 10px 20px; /* Ajuste no espaçamento */
     border: none;
-    background-color: #007bff;
+    background-color: #007bff; /* Considere ajustar baseado no seu esquema de cores */
     color: white;
-    border-radius: 5px;
+    font-size: 16px;
+    border-radius: 8px; /* Bordas mais arredondadas */
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease,
+        transform 0.1s ease; /* Transições suavizadas */
+    font-weight: 500; /* Tipografia mais forte */
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); /* Sombra leve */
+    outline: none; /* Remover contorno ao focar */
 }
 
 .btn-alternar-mapa:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Cor mais escura ao interagir */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Sombra mais pronunciada */
+    transform: translateY(-2px); /* Efeito de elevação */
 }
