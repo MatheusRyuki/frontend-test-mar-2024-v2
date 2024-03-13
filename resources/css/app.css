@@ -188,18 +188,22 @@ a:hover {
     gap: 5px;
 }
 
-.nav-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white !important;
-    border-radius: 4px;
-    text-decoration: none;
-    text-align: center;
-    font-size: 14px;
-    transition: background-color 0.2s ease-in-out;
+.navigation-controls .nav-btn {
+    padding: 10px 20px;
+    background-color: #007bff; /* Cor principal do botão */
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espaço entre ícone e texto */
+    text-decoration: none; /* Remover sublinhado do texto do link */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transição suave */
 }
 
-.nav-btn:hover a {
-    background-color: #0056b3;
+.navigation-controls .nav-btn:hover {
+    background-color: #0056b3; /* Cor de hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada no hover */
 }
